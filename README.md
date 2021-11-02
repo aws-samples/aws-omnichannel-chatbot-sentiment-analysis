@@ -3,13 +3,13 @@
 Deliver Omnichannel Customer Experiences with Interactive Voice Response (IVR) Enabled Contact Centers and Natural Language Processing (NLP) Chatbots – All Backed by Customer Sentiment Analysis.
 
 ### AWS Amplify website with embedded Amazon Lex chatbot.
-![image](https://user-images.githubusercontent.com/73256380/139908631-d583a9ff-4299-4a17-b5b0-4b090e92887a.png)
+![Picture1](https://user-images.githubusercontent.com/73256380/139908957-a646ef4b-219f-4bb6-9500-9ede86ce882e.png)
 
 ### Amazon QuickSight dashboard to present Amazon Transcribe and Amazon Comprehend sentiment analysis AWS Step Function workflow output.
-![image](https://user-images.githubusercontent.com/73256380/139906262-601c683f-cd16-4618-a2db-b7360fe8d9b5.png)
+![Picture2](https://user-images.githubusercontent.com/73256380/139908986-579d1b7e-c012-4828-b845-3c6622e27139.png)
 
 ### Amazon QuickSight dashboard (contd.)
-![image](https://user-images.githubusercontent.com/73256380/139906287-7d04b1ad-e6fa-48f3-a998-162f75159869.png)
+![Picture3](https://user-images.githubusercontent.com/73256380/139909031-18f50f30-872b-48f2-bf4f-7ec66994ef4e.png)
 
 ## Security
 
