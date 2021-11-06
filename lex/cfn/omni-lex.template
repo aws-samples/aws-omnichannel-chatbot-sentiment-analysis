@@ -1,0 +1,228 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Creates Amazon Lex Omni-Channel Chatbot 
+Transform: 'AWS::Serverless-2016-10-31'
+
+Resources:
+  UsersDDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${AWS::StackName}-Users"
+      AttributeDefinitions:
+      - AttributeName: userId
+        AttributeType: S
+      - AttributeName: phone
+        AttributeType: S
+      KeySchema:
+      - AttributeName: userId
+        KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: '3'
+        WriteCapacityUnits: '3'
+      GlobalSecondaryIndexes:
+      - IndexName: phoneindex
+        KeySchema:
+        - AttributeName: phone
+          KeyType: HASH
+        Projection:
+          ProjectionType: ALL
+        ProvisionedThroughput:
+          ReadCapacityUnits: '3'
+          WriteCapacityUnits: '3'
+
+  UserPendingAccountsDDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${AWS::StackName}-UserPendingAccounts"
+      AttributeDefinitions:
+      - AttributeName: userName
+        AttributeType: S
+      - AttributeName: planName
+        AttributeType: S
+      KeySchema:
+      - AttributeName: userName
+        KeyType: HASH
+      - AttributeName: planName
+        KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: '3'
+        WriteCapacityUnits: '3'
+
+  UserExistingAccountsDDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${AWS::StackName}-UserExistingAccounts"
+      AttributeDefinitions:
+      - AttributeName: userName
+        AttributeType: S
+      - AttributeName: planName
+        AttributeType: S
+      KeySchema:
+      - AttributeName: userName
+        KeyType: HASH
+      - AttributeName: planName
+        KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: '3'
+        WriteCapacityUnits: '3'
+
+  BotHandlerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: "Lambda handler for Lex banking bot."
+      FunctionName: !Sub "${AWS::StackName}-OmniLexHandler"
+      CodeUri: "s3://west-omni-lex-lambda-artifacts/BotHandler/index.js.zip"
+      Runtime: nodejs12.x
+      MemorySize: 256
+      Timeout: 20
+      Handler: index.handler
+      Policies:
+        Statement:
+        - Effect: Allow
+          Action:
+          - dynamodb:*
+          Resource:
+          - "*"
+      Environment:
+        Variables:
+          USER_DDB_TABLE: !Ref UsersDDBTable
+          USER_PENDING_ACCOUNTS_DDB_TABLE: !Ref UserPendingAccountsDDBTable
+          USER_EXISTING_ACCOUNTS_DDB_TABLE: !Ref UserExistingAccountsDDBTable
+
+
+  DataLoaderFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: "Lambda function to load the plan catalog."
+      CodeUri: "s3://west-omni-lex-lambda-artifacts/AccountLoader/Archive.zip"
+      Runtime: nodejs12.x
+      MemorySize: 256
+      Timeout: 20
+      Handler: index.handler
+      Policies:
+        Statement:
+          - Effect: Allow
+            Action:
+            - dynamodb:*
+            Resource: 
+            - "*"
+      Environment:
+        Variables:
+          USER_EXISTING_ACCOUNTS_DDB_TABLE: !Ref UserExistingAccountsDDBTable
+
+  LoadPlanData:
+    Properties:
+      ServiceToken: !GetAtt DataLoaderFunction.Arn
+    Type: "Custom::LoadDynamoDB"
+
+  AmplifyRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - amplify.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Policies:
+        - PolicyName: Amplify
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: "amplify:*"
+                Resource: "*"
+
+  AmplifyApp:
+    Type: "AWS::Amplify::App"
+    Properties:
+      Name: "Financial Services Front-End"
+      Repository: https://github.com/kyleblocksom/AWS
+      AccessToken: "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"
+      Description: Octank example app
+      IAMServiceRole: !GetAtt AmplifyRole.Arn
+
+  AmplifyBranch:
+    Type: "AWS::Amplify::Branch"
+    Properties:
+      AppId: !GetAtt AmplifyApp.AppId
+      BranchName: "main"
+
+  KendraIndexRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - kendra.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Policies:
+        - PolicyName: KendraIndexPolicy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: "cloudwatch:PutMetricData"
+                Resource: "*"
+              - Effect: Allow
+                Action: "logs:DescribeLogGroups"
+                Resource: "*"
+              - Effect: Allow
+                Action: "logs:CreateLogGroup"
+                Resource: "arn:aws:logs:us-west-2:239380694500:log-group:/aws/kendra/*"
+              - Effect: Allow
+                Action: 
+                  - "logs:DescribeLogStreams"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Resource: "arn:aws:logs:us-west-2:239380694500:log-group:/aws/kendra/*:log-stream:*"
+
+  KendraFAQRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - kendra.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Policies:
+        - PolicyName: KendraFAQPolicy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: "s3:GetObject"
+                Resource: "arn:aws:s3:::west-lexbot-faq-kendra/*"
+
+  KendraIndex:
+    Type: AWS::Kendra::Index
+    Properties: 
+      Edition: "DEVELOPER_EDITION"
+      Name: "Kendra-Lex-Index"
+      RoleArn: !GetAtt KendraIndexRole.Arn
+
+  KendraFAQ:
+    Type: AWS::Kendra::Faq
+    Properties: 
+      FileFormat: "CSV"
+      IndexId: !GetAtt KendraIndex.Id
+      Name: "Kendra-Lex-FAQ"
+      RoleArn: !GetAtt KendraFAQRole.Arn
+      S3Path: 
+        Bucket: "west-lexbot-faq-kendra"
+        Key: "help-desk-faq.csv"
+
+Outputs:
+
+  DefaultDomain:
+    Value: !GetAtt AmplifyApp.DefaultDomain
