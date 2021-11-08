@@ -1,0 +1,86 @@
+{
+	"Entities": [{
+			"Key": "BRAND",
+			"Sentences": [
+				"I don't really like {KEY}",
+				"I don't like the taste of {KEY}",
+				"{KEY} is one of my favourites",
+				"I prefer {KEY} to other brands",
+				"I didn't used to buy {KEY}, but it's much more to my taste now",
+				"I usually find {KEY} to be too expensive to buy just one, so I tend to buy multi-packs",
+				"There's a problem with the {KEY} that I bought?",
+				"Can I get a refund on the {KEY} that I bought?",
+				"I think you've changed the recipe for {KEY} and I don't like it anymore",
+				"But {KEY} tastes so much worse that others",
+				"Can I get a coupon for {KEY}",
+				"I love {KEY}",
+				"The {KEY} tastes weird",
+				"It has a {KEY} smell to it",
+				"I like a lot of your products, like {KEY}",
+				"There are some special offers on {KEY}",
+				"I purchased a pack of {KEY}",
+				"{KEY} is too sweet for me",
+				"{KEY} smells of sweet candy",
+				"I find {KEY} very sweet"
+			]
+		},
+		{
+			"Key": "CITY",
+			"Sentences": [
+				"I've lived in {KEY} for years",
+				"I've only recently moved to {KEY}",
+				"I can't seem to buy them where I live in {KEY}",
+				"The weather is usually pretty awful in {KEY}",
+				"{KEY} is definitely the best place to live",
+				"Yes, {KEY} is a great place",
+				"I live in {KEY} but I don't actually work there",
+				"The nearest large town to me is {KEY}",
+				"I really don't like living in {KEY}",
+				"It's very busy and noisy in downtown {KEY}",
+				"In all of {KEY} I can't find it anywhere",
+				"We have many consumers in {KEY}",
+				"Right now I'm in {KEY}",
+				"{KEY} is a beautiful city"
+			]
+		},
+		{
+			"Key": "COUNTRY_STATE",
+			"Sentences": [
+				"What part of {KEY} do you live in",
+				"I've lived in {KEY} for years",
+				"I've only recently moved to {KEY}",
+				"I don't think you sell them in {KEY}",
+				"The weather is usually pretty awful in {KEY}",
+				"{KEY} is definitely the best place to live",
+				"Yes, {KEY} is a great place",
+				"I live in {KEY} but I don't actually work there",
+				"It's next door to {KEY}",
+				"I really don't like living in {KEY}, I really ought to move house",
+				"It's very busy and noisy in the capital of {KEY}"
+			]
+		},
+		{
+			"Key": "INGREDIENT",
+			"Sentences": [
+				"I don't really like the taste of {KEY}",
+				"I never buy anything with {KEY} in it",
+				"{KEY} is one of my favourite ingredients",
+				"I prefer {KEY} to other versions of that ingredient",
+				"I didn't used to buy that, but now that you've added {KEY} to the recipe it's much more to my taste now",
+				"Can I get a refund, as I'm allergic to {KEY}?",
+				"I think you've changed the recipe and added {KEY} and I don't like it anymore",
+				"The texture is a little weird, I think it's because you have {KEY} in the recipe",
+				"You should add {KEY} to more products, it's makes them so much tastier",
+				"Can you add more {KEY} to it?",
+				"What are the ingredients in {KEY}?",
+				"I've heard that {KEY} is toxic",
+				"Is it safe to eat {KEY}?",
+				"Why are there {KEY} in this?",
+				"Does {KEY} cause cancer?",
+				"Is {KEY} organic?",
+				"Is {KEY} vegetarian?",
+				"Is {KEY} suitable for vegans?"
+			]
+		}
+	]
+}
