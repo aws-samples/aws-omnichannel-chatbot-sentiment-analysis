@@ -197,7 +197,7 @@ The below architecture diagram illustrates your resultant solution following the
 
 | **Region**   |  **Launch** |
 |----------|:-------------:|
-| Oregon (us-west-2) | <a target="_blank" href="https://us-west-2.console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/create/review?templateURL=https://omni-lex-artifacts.s3.us-west-2.amazonaws.com/cfn/ssm.templatecloud&stackName=omni-lex-sentiment-ssm"><span><img height="24px" src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png"/></span></a> |
+| Oregon (us-west-2) | <a target="_blank" href="https://us-west-2.console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/create/review?templateURL=https://omni-lex-artifacts.s3.us-west-2.amazonaws.com/cfn/ssm.template&stackName=omni-lex-sentiment-ssm"><span><img height="24px" src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png"/></span></a> |
 
 CloudFormation Launch Instructions:
 
