@@ -195,10 +195,9 @@ The below architecture diagram illustrates your resultant solution following the
 
 ###### Part-1 of your customer sentiment analysis backend provisions AWS Systems Manager Parameter Store values that will used in subsequent deployment steps to identify variable like your call recording S3 Bucket name and the name of the S3 Bucket that will hold your transcribed call recordings.
 
-| **Region** | **Region Code** | **Launch** |
-| --- | --- | --- |
-| US East (N. Virginia) | us-east-1 | cfn/ssm.template |
-| --- | --- | --- |
+| **Region**   |  **Launch** |
+|----------|:-------------:|
+| Oregon (us-west-2) | <a target="_blank" href="https://us-west-2.console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/create/review?templateURL=https://omni-lex-artifacts.s3.us-west-2.amazonaws.com/cfn/ssm.templatecloud&stackName=omni-lex-sentiment-ssm"><span><img height="24px" src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png"/></span></a> |
 
 CloudFormation Launch Instructions:
 
@@ -240,8 +239,6 @@ Wait for the _CREATE_COMPLETE_ status on your CloudFormation stack; you need to 
 | VocabularyName | undefined | Name of the custom vocabulary to use for Amazon Transcribe (excluding language suffix). |
 
 #### Deployment Part-2: Provision backend services by installing code dependencies, creating AWS Lambda layer, then packaging and deploying AWS CloudFormation template.
-
-link to download to source code folder
 
 1.  Install code dependencies:
 
