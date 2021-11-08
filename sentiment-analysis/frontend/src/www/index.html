@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Octank Financial - Conversation Analytics</title>
+        <link rel="icon" href="images/octank-logo.png">
+        <meta charset="utf-8">
+
+        <style>
+            @font-face {
+            font-family: Raleway;
+            src: url("fonts/AmazonEmber_Lt.woff");
+            font-weight: 400;
+            font-style: normal;
+            font-size: 12pt;
+        }
+
+        html {
+            display: flex;
+            background: #333;
+            justify-content: center;
+            background-image: url('images/city.jpg')
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            font-family: Raleway;
+            min-width: 75%;
+            min-height: 100vh;
+            margin: 0;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+        }
+
+        @media screen and (max-width: 1000px) {
+            body {
+                min-width: 100%;
+            }
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            background: black;
+            color: white;
+            top: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+            padding: 0 8em;
+            font-size: 18px;
+        }
+
+        header img {
+            max-width: 6em;
+        }
+
+        body > div {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            flex-grow: 1;
+            background: black
+        }
+
+        body > div > nav {
+            flex-grow: 0;
+            display: flex;
+            flex-direction: column;
+            background-image: url('images/city.jpg')
+            padding: 0;
+            color: white;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+            padding: 1em 0;
+        }
+
+        body > div > nav a {
+            color: black;
+            font-weight: bold;
+            display: inline-block;
+            padding: 1em;
+            text-align: center;
+        }
+
+        body > div > nav a:hover {
+            background: #ee8a0a;
+            text-decoration: none;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: stretch;
+            margin: 1em;
+            padding: 0;
+        }
+
+        main > * {
+            display: none;
+            flex-direction: column;
+            padding: 0 0.5em;
+        }
+
+        section {
+            background: black;
+            box-shadow: -1px 2px 5px rgba(0, 0, 0, 0.25);
+            color: white;
+        }
+
+        row {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            color: white;
+        }
+
+        row > * {
+            margin: 0 0.5em;
+            margin-inline-start:3em;
+        }
+
+        canvas {
+            max-width: 30em;
+            background: black;
+            margin: 2em;
+            margin-inline-start: 6em;
+        }
+
+        a {
+            color: #66f;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: white;
+        }
+        h5 {
+            font-weight: bold;
+            color: white;
+            font-size: 48px;
+            margin: .25em;
+        }
+        h4 {
+            color: #4677b2;
+            font-size: 48px;
+        }
+        h6 {
+            font-size: 48px;
+            color: #4677b2;
+        }
+
+        h2:first-child {
+            font-size: 22px;
+            margin: 1em;
+            color: #4677b2;
+        }
+
+        #loading {
+            margin: 0;
+            padding: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            justify-content: center;
+            font-size: 200%;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+        }
+
+        .loading::after {
+            content: "";
+            border: 0.25em solid #eee;
+            border-top: 0.25em solid #ff9900;
+            border-radius: 50%;
+            width: 0.25em;
+            height: 0.25em;
+            animation: spin 1s linear infinite;
+            margin-left: 1em;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .list tbody > tr:hover {
+            cursor: pointer;
+            background: #ee8a0a !important;
+        }
+
+        .list tbody > tr:nth-child(2n) {
+            background: rgba(136, 153, 170, 0.2);
+        }
+
+        section > table {
+            width: 100%;
+        }
+
+        main table {
+            border-collapse: separate;
+            background: black;
+        }
+
+        main table td {
+            color: lightgray;
+        }
+
+        main table thead,
+        main table th {
+            text-align: left;
+            font-weight: bold;
+            color: #ee8a0a;
+        }
+
+        main table tbody > th {
+            background: #000;
+            font-weight: bold;
+        }
+
+        span.medium {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        span.low {
+            cursor: pointer;
+            color: #f00;
+            text-decoration: underline;
+        }
+
+        span.pii {
+            text-decoration: line-through;
+            color: #666;
+            font-style: oblique;
+        }
+
+        footer {
+            text-align: right;
+            margin: 0.5em;
+        }
+
+        audio {
+            filter: invert(100%);
+            border-radius: 1.5em;
+        }
+
+        button.small {
+            margin: 0;
+            padding: 0 0.25em;
+            display: inline;
+            border: 0;
+            background: #999;
+            color: #161e2d;
+            border-radius: 0.25em;
+        }
+
+        button.small:hover {
+            background: #ddd;
+            cursor: pointer;
+        }
+
+        .nowrap {
+            white-space: nowrap;
+        }
+
+        .icon {
+            max-width: 1.5em;
+            vertical-align: middle;
+            font-weight: bold;
+        }
+
+        #detail td {
+            overflow-wrap: anywhere;
+        }
+
+        #detail_data > row {
+            margin: 1.5em 0;
+        }
+
+        #detail_data > row > div > p {
+            margin: 0;
+        }
+
+        #detail_data .entity {
+            cursor: pointer;
+        }
+
+        #entites {
+            margin: 0;
+            padding: 0;
+        }
+
+        #entities > span {
+            border-radius: 0.25em;
+            background: #ddedf1;
+            padding: 0.25em 0.5em;
+            margin: 0 1em 0 0;
+        }
+
+        #entities > span:hover {
+            background: #ee8a0a;
+            cursor: pointer;
+        }
+
+        .positive {
+            color: green;
+        }
+
+        .negative {
+            color: red;
+        }
+
+        .neutral {
+            color: grey;
+        }
+
+
+
+        #search_selected_entities span {
+            background: #def;
+            border: 1px solid #abc;
+            display: inline-block;
+            margin: 0.25em 0.5em;
+            padding: 0 0.25em;
+            cursor: pointer;
+        }
+
+        #search_selected_entities span:hover {
+            text-decoration: line-through;
+            background: #ee8a0a;
+        }
+
+        main nav {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            margin: 0;
+        }
+
+        main nav button {
+            background: black;
+            border: 1px solid #ee8a0a;
+            padding: 0.25em 1em;
+            margin: 0;
+            color: white;
+        }
+
+        main nav button:enabled:hover {
+            background: #ee8a0a;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <img src="images/octank-logo.png" alt="Logo" />
+            <h1>Octank</h1>
+            <h4>Financial</h4>
+            <h5>- Conversation</h5>
+            <h6>Analytics</h6>
+        </header>
+
+        <div class="loading" id="loading">
+            Loading
+        </div>
+
+        <div>
+            <nav>
+                <a href="#"><img class="icon" src="images/summary.webp" alt="Summary" /></a>
+                <a href="#search"><img class="icon" src="images/search.jpg" alt="Search" /></a>
+                <a id="dashboardLink" href="#dashboard" target="_blank"><img class="icon" src="images/dashboard.svg" alt="Dashboard" /></a>
+            </nav>
+
+            <main>
+                <div id="summary" class="list">
+                    <section>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Job Name</th>
+                                    <th>Timestamp</th>
+                                    <th>Average Accuracy</th>
+                                    <th>Language Code</th>
+                                    <th>Call Duration</th>
+                                </tr>
+                            </tbody>
+
+                            <tbody id="list_data"></tbody>
+                        </table>
+
+                        <button id="load_more">Load more...</button>
+                    </section>
+                </div>
+
+                <div id="search">
+                    <section>
+                        <h2>Contact Search</h2>
+
+                        <table>
+                            <tr>
+                                <th>Language Code</th>
+                                <td>
+                                    <select id="search_language">
+                                        <option>-</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Date range</th>
+                                <td>
+                                    <input type="text" id="search_date_from" placeholder="Start" />
+                                    <input type="text" id="search_date_to" placeholder="End" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Sentiment</th>
+                                <td>
+                                    <select id="search_sentiment_who">
+                                        <option>-</option>
+                                        <option>Agent</option>
+                                        <option>Caller</option>
+                                    </select>
+
+                                    sentiment
+
+                                    <select id="search_sentiment_what">
+                                        <option>-</option>
+                                        <option>average</option>
+                                        <option>trend</option>
+                                    </select>
+
+                                    is
+
+                                    <select id="search_sentiment_direction">
+                                        <option>-</option>
+                                        <option>positive</option>
+                                        <option>negative</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Entities</th>
+                                <td>
+                                    <datalist id="search_entities_list">
+                                    </datalist>
+                                    <input type="text" autoComplete="on" list="search_entities_list" id="search_entities" placeholder="Start typing..." />
+                                    <span id="search_selected_entities"></span>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <button id="search_button">Search</button>
+                    </section>
+
+                    <section id="search_results">
+                        <div class="list">
+                            <h2>Search Results</h2>
+
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Job Name</th>
+                                        <th>Timestamp</th>
+                                        <th>Average Accuracy</th>
+                                        <th>Language Code</th>
+                                        <th>Call Duration</th>
+                                    </tr>
+                                </tbody>
+
+                                <tbody id="search_results_data"></tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+
+                <div id="detail">
+
+                    <nav>
+                        <button id="prev">&larr; Previous entry</button>
+                        <button id="swap">Swap Agent/Caller</button>
+                        <button id="next">Next entry &rarr;</button>
+                    </nav>
+
+                    <section>
+                        <row>
+                            <div>
+                                <h2>Contact Summary</h2>
+
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th>Date / Time</th>
+                                            <td id="detail_parsed"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Entity Recognizer Name</th>
+                                            <td id="detail_entity_recogniser"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Language Code</th>
+                                            <td id="detail_language"></td>
+                                        </tr>
+                                    </tbody>
+
+                                    <tbody id="detail_sentiment"></tbody>
+                                </table>
+                            </div>
+
+                            <div>
+                                <h2>Source Information</h2>
+
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th>Type</th>
+                                            <td>Voice Transcription</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Job Name</th>
+                                            <td id="detail_jobName"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>File Format</th>
+                                            <td id="detail_fileFormat"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Call Duration</td>
+                                            <td id="detail_duration"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Sample Rate</th>
+                                            <td id="detail_sampleRate"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Custom Vocabulary</th>
+                                            <td id="detail_vocabulary"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Word Accuracy</th>
+                                            <td id="detail_averageAccuracy"></td>
+                                        </tr>
+                                    </tbody>
+
+                                    <tbody id="detail_sentiment"></tbody>
+                                </table>
+                            </div>
+
+                            <canvas id="detail_sentimentGraph"></canvas>
+                        </row>
+                    </section>
+
+                    <!--
+                    <canvas id="detail_accuracyGraph"></canvas>
+                    -->
+
+                    <section>
+                        <h2>Entities</h2>
+                        <p id="entities"></p>
+                    </section>
+
+                    <section>
+                        <h2>Recording</h2>
+
+                        <h3 class="loading" id="audio_loading">
+                            Audio loading
+                        </h3>
+                        <audio controls id="audio">
+                            <source id="detail_link">
+                            Your browser does not support audio playback.
+                        </audio>
+
+                        <h2>Transcript</h2>
+                        <div id="detail_data"></div>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </body>
+
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment-timezone-with-data-10-year-range.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+
+    <script src="js/config.js"></script>
+    <script src="js/main.js" type="module"></script>
+</html>
