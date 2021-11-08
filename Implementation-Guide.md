@@ -36,7 +36,8 @@
 | **Region** | **Region Code** | **Launch** |
 | --- | --- | --- |
 | US East (N. Virginia) | us-east-1 | omni-lex.yaml |
-| https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=omni-lex&templateURL=https://omni-lex-artifacts.s3.us-west-2.amazonaws.com/omni-lex-cfn/omni-lex.yaml |
+
+<img height="24px" src="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=omni-lex&templateURL=https://omni-lex-artifacts.s3.us-west-2.amazonaws.com/omni-lex-cfn/omni-lex.yaml" data-canonical-src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png" style="max-width: 100%;">
 
 #### AWS CloudFormation Launch Instructions:
 
