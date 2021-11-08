@@ -33,11 +33,9 @@
 
 ###### In Part-1 of your application architecture, you will build an Amazon Lex chatbot that understands customers' speech and text inputs. Your chatbot is embedded within a website created using AWS Amplify which is connected to the source repository that hosts our HTML, JavaScript, and CSS code. Data about available plans and users’ chosen plans are persisted in Amazon DynamoDB. AWS Lambda functions are triggered by Amazon Lex to execute business logic and interact with the database layer to query pertinent customer data and fulfill customer requests. Amazon Kendra also allows our chatbot to query against an indexed FAQ document so customers and call center agents can quickly find answers. You can also connect the Amazon Lex chatbot with Twilio SMS and Amazon Connect, which allows users to interact with your chatbot over SMS text messages and call your customer service number and interact with Amazon Lex’s Interactive Voice Response (IVR).
 
-| **Region** | **Region Code** | **Launch** |
-| --- | --- | --- |
-| US East (N. Virginia) | us-east-1 | omni-lex.yaml |
-
-<img height="24px" src="https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=omni-lex&templateURL=https://omni-lex-artifacts.s3.us-west-2.amazonaws.com/omni-lex-cfn/omni-lex.yaml" data-canonical-src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png" style="max-width: 100%;">
+| **Region**   |  **Launch** |
+|----------|:-------------:|
+| Oregon (us-west-2) | <a target="_blank" href="https://us-west-2.console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/create/review?templateURL=https://omni-lex-artifacts.s3.us-west-2.amazonaws.com/omni-lex-cfn/omni-lex.yaml&stackName=omni-lex"><span><img height="24px" src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png"/></span></a> |
 
 #### AWS CloudFormation Launch Instructions:
 
