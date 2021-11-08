@@ -254,7 +254,16 @@ cd src/pca
 pip install -t . -r requirements.txt
 ```
   
-2.  Upload _ffmpeg.zip_ file to the S3 bucket defined in the configuration parameter _SupportFilesBucketName_ as specified in Part-1 of your customer sentiment analysis deployment.
+2.  Create and upload _ffmpeg.zip_ file to the S3 bucket defined in the configuration parameter _SupportFilesBucketName_ as specified in Part-1 of your customer sentiment analysis deployment:
+
+ ```
+mkdir layer
+cd layer
+mkdir bin
+curl https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64- static.tar.xz | tar Jx
+mv ffmpeg*/ffmpeg ffmpeg*/ffprobe bin zip -vr ffmpeg.zip bin -X
+```
+
 3.  Using the AWS CLI, enter the following to package and deploy your AWS CloudFormation template, replacing the below values:
 
 | **Name** | **Value** |
@@ -312,5 +321,3 @@ aws cloudformation deploy \
 Your implementation is complete! You successfully deployed and configured the below architecture:
 
 <img width="1792" alt="Screen Shot 2021-11-02 at 12 27 08 PM" src="https://user-images.githubusercontent.com/73256380/139935830-4f7a8e13-a8b5-42bb-8fd8-669b67b88e83.png">
-
- 
