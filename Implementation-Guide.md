@@ -40,11 +40,8 @@
 #### AWS CloudFormation Launch Instructions:
 
  1. Select the **Launch Stack** link above.
- 2. Select **Next** on the Specify template page.
- 3. Enter your \<STACK_NAME\> on the Specify stack details page and select **Next**.
- 4. On the Configure stack options page, leave all the defaults and select **Next**.
- 5. On the Review page, check all the boxes to acknowledge that CloudFormation will create IAM resources.
- 6. Select **Create stack**.
+ 2. Enter your _<YOUR_STACK_NAME>_ and check all the boxes to acknowledge that CloudFormation will create IAM resources.
+ 3. Select **Create stack**.
 
 Allow CloudFormation to launch your resources in the background; you do not need to wait for it to finish before proceeding to Deployment Part-2.
 
@@ -182,10 +179,10 @@ To associate your Amazon Lex chatbot with your Slack Application, we need to act
 #### 3-Part Customer Sentiment Analysis Deployment Process:
    
 1.  Create AWS Systems Manager Parameter Store by deploying AWS CloudFormation template and specifying AWS CloudFormation parameter values. 
-2.  Provision backend services by installing code dependencies, creating AWS Lambda layer, then packaging and deploying AWS CloudFormation template ().
-3.  Provision frontend customer sentiment analysis user-interface by installing code dependencies then packaging and deploying CloudFormation template ().
+2.  Provision backend services by installing code dependencies, creating AWS Lambda layer, then packaging and deploying AWS CloudFormation template.
+3.  Provision frontend customer sentiment analysis user-interface by installing code dependencies then packaging and deploying CloudFormation template.
 
-The below architecture diagram illustrates your resultant solution following the above deployment:
+#### The below architecture diagram illustrates your resultant solution following the above deployment:
 
  <img width="1792" alt="Screen Shot 2021-11-02 at 12 22 23 PM" src="https://user-images.githubusercontent.com/73256380/139932191-8c6bc042-9596-4b5f-905e-ed01c4ee579a.png">
 
@@ -202,11 +199,8 @@ The below architecture diagram illustrates your resultant solution following the
 CloudFormation Launch Instructions:
 
 1.  Select the **Launch Stack** link above.
-2.  Select **Next** on the Specify template page.
-3.  Enter _\<YOUR_STACK_NAME-\>_ on the Specify stack details page and select Next.
-4.  On the Configure stack options page, leave all the defaults and select **Next**.
-5.  On the Review page, check all the boxes to acknowledge that CloudFormation will create IAM resources.
-6.  Select **Create stack**.
+2.  Enter _\<YOUR_STACK_NAME\>_ and your preferred parameter values that map to your existing S3 Buckets.
+3.  Select **Create stack**.
 
 Wait for the _CREATE_COMPLETE_ status on your CloudFormation stack; you need to wait for it to finish before proceeding to Deployment Part-2.
 
@@ -265,7 +259,7 @@ mv ffmpeg*/ffmpeg ffmpeg*/ffprobe bin zip -vr ffmpeg.zip bin -X
 | **Name** | **Value** |
 | --- | --- |
 | \<YOUR_BUCKET\> | Name of the S3 bucket that will hold packaged AWS Lambda code during deployment |
-| \<STACK_NAME\> | Name of the CloudFormation stack |
+| \<YOUR_STACK_NAME\> | Name of the CloudFormation stack |
 
 ```
 cd cfn 
@@ -293,7 +287,7 @@ npm install
 | **Name** | **Value** |
 | --- | --- |
 | \<YOUR_BUCKET\> | Name of the S3 bucket in your account to store packaged AWS Lambda functions |
-| \<STACK_NAME\> | Name of the CloudFormation stack |
+| \<YOUR_STACK_NAME\> | Name of the CloudFormation stack |
 
 ```
 cd cfn 
