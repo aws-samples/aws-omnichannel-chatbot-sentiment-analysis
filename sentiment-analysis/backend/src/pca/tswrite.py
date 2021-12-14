@@ -358,7 +358,6 @@ def generateDocument():
             fullReload = True
 
     # Workflow for process
-    parsets.setAWSAccessKeys("AKIA2K3P4TH77OUWFMTP", "awkGutz2ULP2VsPuJFy8Qa3BehoIBV0hWHNpXprd")
     start = perf_counter()
 
     if not fullReload:
