@@ -6,7 +6,7 @@
 
 ###### Iterating further on the seamless customer journey concept, you can derive customer sentiment from customer interconnections across your platforms. By identifying and extracting the relevant call and chat logs, website dwell times, and other pertinent source material, you develop a deep understanding of customer sentiment towards your services, products, employees, and more broadly, your brand, allowing you to iteratively improve the overall experience for your customers.
 
-###### With Amazon Connect and Amazon Lex, you are able to offer your customers the flexible user experience they desire while maintaining a holistic view of their cross-platform engagement. By enabling customers with a self-service capability, you maximize the productivity of your call agents and skills-based work types while also minimizing the operational costs associated with human workforce supply.
+###### With Amazon Connect and Amazon Lex, you are able to offer your customers the flexible user experience they desire while maintaining a holistic view of their cross-platform engagement. By enabling customers with a self-service capability, you maximize the productivity of your call agents and skills-based worker types while also minimizing the operational costs associated with human workforce supply.
 
 #### Omnichannel User Interface Overview:
 
