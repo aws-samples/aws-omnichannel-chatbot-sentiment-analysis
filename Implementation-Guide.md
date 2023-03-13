@@ -1,4 +1,4 @@
-## Amazon Connect and Amazon Lex: Better Together
+## Build an Omnichannel Chatbot with Sentiment Analysis on AWS
 
 #### Deliver Omnichannel Customer Experiences with Interactive Voice Response (IVR) Enabled Contact Centers and Natural Language Processing (NLP) Chatbots – All Backed by Customer Sentiment Analysis
 
