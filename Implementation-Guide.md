@@ -83,7 +83,7 @@ Import Your Amazon Lex Chatbot:
 
    - Under **Lambda initialization and validation**, select **Initialization and validation code hook** then choose your Lambda function _<STACK_NAME>-OmniLexHandler_ from the dropdown. The version or alias should be set to _Latest_. Select **OK** when prompted to give Amazon Lex permission to invoke your Lambda Function.
 
-   - Under Fulfillment, select **AWS Lambda function** then choose your Lambda function _<STACK_NAME>-OmniLexHandler_ from the dropdown with the version or alias set to _Latest_.
+   - Under **Fulfillment**, select **AWS Lambda function** then choose your Lambda function _<STACK_NAME>-OmniLexHandler_ from the dropdown with the version or alias set to _Latest_.
 
 6. Select **OpenAccount** under **Intents** on the left menu: 
 
